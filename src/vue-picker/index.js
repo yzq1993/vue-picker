@@ -6,10 +6,11 @@ import citypicker from './citypicker'
 import multipicker from './multipicker'
 
 export default  (Vue,options)=>{
-	Vue.use(picker)
-	Vue.use(datepicker)
-	Vue.use(citypicker)
-	Vue.use(multipicker)
+
+	Vue.prototype.$picker = picker
+	Vue.prototype.$datepicker = datepicker
+	Vue.prototype.$citypicker = citypicker
+	Vue.prototype.$multipicker = multipicker
 }
 
 export {picker,datepicker,citypicker,multipicker}

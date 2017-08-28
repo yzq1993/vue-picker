@@ -1,37 +1,34 @@
 import Vue from 'vue';
 import picker from '../picker'
-
-
-Vue.use(picker)
-
-export default  (Vue,options)=>{
-	Vue.prototype.$multipicker = (options={})=>{
-		let option=getOption(options.option,getIndex(options.option,options.value)),
-			hasValue=options.value&&options.value.length!=0,len
-		return new Promise((resolve, reject)=>{
-			Vue.prototype.$picker({
-				title:options.title||'请选择',
-				value:options.value,
-				option:option,
-				change:(value,index,_this)=>{
-					let newOption=changeOption(options.option,value)
-					option.splice(++index,value.length-index,...newOption)
-					options.value.splice(index,value.length-index)
-					newOption.forEach((m)=>{
-						_this.scrollTop(index++,m[0])
-					})
-					if(typeof options.change =='function'){
-						options.change(value,index,_this)
-					}
+let multipicker=(options={})=>{
+	let option=getOption(options.option,getIndex(options.option,options.value)),
+		hasValue=options.value&&options.value.length!=0,len
+	return new Promise((resolve, reject)=>{
+		picker({
+			title:options.title||'请选择',
+			value:options.value,
+			option:option,
+			shadeClose:options.shadeClose,
+			change:(value,index,_this)=>{
+				let newOption=changeOption(options.option,value)
+				option.splice(++index,value.length-index,...newOption)
+				options.value.splice(index,value.length-index)
+				newOption.forEach((m)=>{
+					_this.scrollTop(index++,m[0])
+				})
+				if(typeof options.change =='function'){
+					options.change(value,index,_this)
 				}
-			}).then((e)=>{
-				resolve(e)
-			}).catch((e)=>{
-				reject(e)
-			})
+			}
+		}).then((e)=>{
+			resolve(e)
+		}).catch((e)=>{
+			reject(e)
 		})
-	}
+	})
 }
+
+export default  multipicker
 
 
 

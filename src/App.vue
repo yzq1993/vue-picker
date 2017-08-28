@@ -32,7 +32,7 @@ export default {
 				}
 			}).then((e)=>{
 				console.log(e)
-			})
+			}).catch(()=>{})
 		},
 		datepicker(){
 			this.$datepicker({
@@ -46,7 +46,7 @@ export default {
 			}).then((e)=>{
 				this.time=e
 				console.log(e)
-			})
+			}).catch(()=>{})
 		},
 		citypicker(){
 			this.$citypicker({
@@ -165,7 +165,7 @@ export default {
 			}).then((e)=>{
 				this.m=e
 				console.log(e)
-			})
+			}).catch(()=>{})
 		}
 	}
 }

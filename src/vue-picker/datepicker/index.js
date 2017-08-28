@@ -1,76 +1,74 @@
 import Vue from 'vue';
 import picker from '../picker'
+let datepicker=(options={})=>{
+	let option
+	options.type=options.type||'date'
 
+	if(options.type=='time'){
+		option=[setHour(),setMinute()]
+	}else if(options.type=='datetime'){
+		option=[setYear(options.startYear,options.endYear),setMonth(),setDay(options.value?options.value[0]:'',options.value?options.value[1]:''),setHour(),setMinute()]
+	}else if(options.type=='yearmonth'){
+		option=[setYear(options.startYear,options.endYear),setMonth()]
+	}else if(options.type=='year'){
+		option=[setYear(options.startYear,options.endYear)]
+	}else if(options.type=='date'){
+		option=[setYear(options.startYear,options.endYear),setMonth(),setDay(options.value?options.value[0]:'',options.value?options.value[1]:'')]
+	}
 
-Vue.use(picker)
-
-export default  (Vue,options)=>{
-	Vue.prototype.$datepicker = (options={})=>{
-		let option
-		options.type=options.type||'date'
-
+	if(!options.value||options.value.length==0){
+		let now=new Date()
 		if(options.type=='time'){
-			option=[setHour(),setMinute()]
+			options.value=[now.getHours(),now.getMinutes()]
 		}else if(options.type=='datetime'){
-			option=[setYear(options.startYear,options.endYear),setMonth(),setDay(options.value?options.value[0]:'',options.value?options.value[1]:''),setHour(),setMinute()]
+			options.value=[now.getFullYear(),now.getMonth()+1,now.getDate(),now.getHours(),now.getMinutes()]
 		}else if(options.type=='yearmonth'){
-			option=[setYear(options.startYear,options.endYear),setMonth()]
+			options.value=[now.getFullYear(),now.getMonth()+1]
 		}else if(options.type=='year'){
-			option=[setYear(options.startYear,options.endYear)]
+			options.value=[now.getFullYear()]
 		}else if(options.type=='date'){
-			option=[setYear(options.startYear,options.endYear),setMonth(),setDay(options.value?options.value[0]:'',options.value?options.value[1]:'')]
+			options.value=[now.getFullYear(),now.getMonth()+1,now.getDate()]
 		}
-
-		if(!options.value||options.value.length==0){
-			let now=new Date()
-			if(options.type=='time'){
-				options.value=[now.getHours(),now.getMinutes()]
-			}else if(options.type=='datetime'){
-				options.value=[now.getFullYear(),now.getMonth()+1,now.getDate(),now.getHours(),now.getMinutes()]
-			}else if(options.type=='yearmonth'){
-				options.value=[now.getFullYear(),now.getMonth()+1]
-			}else if(options.type=='year'){
-				options.value=[now.getFullYear()]
-			}else if(options.type=='date'){
-				options.value=[now.getFullYear(),now.getMonth()+1,now.getDate()]
-			}
+	}
+	if(options.value&&option.length!=options.value.length){
+		console.log('默认值错误或类型错误')
+	}
+	options.value=options.value.map((value)=>{
+		if(typeof value =='number'){
+			return value<10?'0'+value:value
+		}else{
+			return value
 		}
-		if(options.value&&option.length!=options.value.length){
-			console.log('默认值错误或类型错误')
-		}
-		options.value=options.value.map((value)=>{
-			if(typeof value =='number'){
-				return value<10?'0'+value:value
-			}else{
-				return value
-			}
-			
-		})
-		return new Promise((resolve, reject)=>{
-			Vue.prototype.$picker({
-				title:options.title||'请选择',
-				value:options.value,
-				option:option,
-				change:(value,index,_this)=>{
-					if((options.type=='date'||options.type=='datetime')&&(index==0||index==1)){
-						let day=setDay(value[0],value[1])
-						option.splice(2,1,day)
-						if(value[2]>day[day.length-1]){
-							_this.scrollTop(2,day[day.length-1])
-						}
-					}
-					if(typeof options.change =='function'){
-						options.change(value,index,_this)
+		
+	})
+	return new Promise((resolve, reject)=>{
+		picker({
+			title:options.title||'请选择',
+			value:options.value,
+			option:option,
+			shadeClose:options.shadeClose,
+			change:(value,index,_this)=>{
+				if((options.type=='date'||options.type=='datetime')&&(index==0||index==1)){
+					let day=setDay(value[0],value[1])
+					option.splice(2,1,day)
+					if(value[2]>day[day.length-1]){
+						_this.scrollTop(2,day[day.length-1])
 					}
 				}
-			}).then((e)=>{
-				resolve(e)
-			}).catch((e)=>{
-				reject(e)
-			})
+				if(typeof options.change =='function'){
+					options.change(value,index,_this)
+				}
+			}
+		}).then((e)=>{
+			resolve(e)
+		}).catch((e)=>{
+			reject(e)
 		})
-	}
+	})
 }
+
+export default  datepicker
+
 
 function setYear(start=1900,end){
 	let now=new Date()
