@@ -43,10 +43,12 @@ export default {
 	},
 	created(){
 		document.body.style.overflowY = 'hidden'
+		this.initTop()
+	},
+	mounted(){
 		setTimeout(()=>{
 			this.activeClass='active'
 		},0)
-		this.initTop()
 	},
 	methods:{
 		initTop(){
