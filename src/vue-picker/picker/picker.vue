@@ -135,6 +135,7 @@ export default {
 <style>
 .am-picker{
 	position: fixed;top:0;left:0;
+	z-index:100000;
 	height:100%;width:100%;
 	line-height: 35px;
 	font-size: 16px;
