@@ -5,15 +5,14 @@
 
 ```
 
-import vuePicker form 'vue-picker'
+import vuePicker from 'vue-picker'
 Vue.use(vuePicker)
 //也可以单独引入
-import {picker,datepicker,citypicker,multipicker} form 'vue-picker'
-Vue.use(picker)
-Vue.use(datepicker)
-Vue.use(citypicker)
-Vue.use(multipicker)
-
+import {picker,datepicker,citypicker,multipicker} from 'vue-picker'
+Vue.prototype.$picker = picker
+Vue.prototype.$datepicker = datepicker
+Vue.prototype.$citypicker = citypicker
+Vue.prototype.$multipicker = multipicker
 
 this.$picker({
   value:1//默认值
