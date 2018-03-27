@@ -1,7 +1,8 @@
 import Vue from 'vue';
+import component from './picker.vue'
 const picker=(options={})=>{
 	return new Promise((resolve, reject)=>{
-		let picker = Vue.extend(require('./picker.vue'));
+		let picker = Vue.extend(component);
 		options.callback=(status,value)=>{
 			if(status){
 				resolve(value)
