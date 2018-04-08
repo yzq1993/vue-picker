@@ -15,8 +15,7 @@ let datepicker=(options={})=>{
 	}else if(options.type=='date'){
 		option=[setYear(options.startYear,options.endYear),setMonth(),setDay(options.value?options.value[0]:'',options.value?options.value[1]:'')]
 	}
-
-	if(!options.value||options.value.length==0){
+	if(!options.value||options.value.constructor!=Array){
 		let now=new Date()
 		if(options.type=='time'){
 			options.value=[now.getHours(),now.getMinutes()]
