@@ -26,7 +26,7 @@ let citypicker = (options={})=>{
 
 	return new Promise((resolve, reject)=>{
 
-		Vue.prototype.$picker({
+		picker({
 			title:options.title||'请选择',
 			value:options.value,
 			option:option,
