@@ -11,13 +11,12 @@ const picker=(options={})=>{
 			}
 		}
 		
-		if(typeof options.option[0] !='object'){
+		if(options.option[0].constructor!=Array){
 			let m=options.option
 			options.option=[]
 			options.option[0]=m
 		}
-		
-		if(!options.value||options.value.length==0){
+		if(!coptions.value||options.value.constructor!=Array){
 			options.value=[]
 			options.option.forEach(function(value, index) {
 				options.value[index]=value[0]
