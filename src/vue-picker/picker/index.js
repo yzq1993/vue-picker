@@ -16,7 +16,9 @@ const picker=(options={})=>{
 			options.option=[]
 			options.option[0]=m
 		}
-		if(!options.value||options.value.constructor === Array){
+    if(typeof options.value!='undefined'&&options.value.constructor!=Array){
+			options.value=[options.value]
+		}else if(typeof options.value==='undefined'||options.value.length==0){
 			options.value=[]
 			options.option.forEach(function(value, index) {
 				options.value[index]=value[0]
