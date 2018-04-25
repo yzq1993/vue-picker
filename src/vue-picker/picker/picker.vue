@@ -36,7 +36,6 @@ export default {
 				move:'',
 				value:''
 			},
-			flag:true,
 			endClass:[],
 			height:35
 		}
@@ -85,14 +84,9 @@ export default {
 			this.start.value=this.value[index]
 		},
 		touchmove(event){
-			if(!this.flag){return false}
-			this.flag=false;
-			setTimeout(()=>{
-				let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
-				this.start.move=event.targetTouches[0].pageY
-				this.topStyle.splice(index, 1, -(this.start.style+this.start.top-this.start.move))
-				this.flag=true
-			},15)
+			let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
+			this.start.move=event.targetTouches[0].pageY
+			this.topStyle.splice(index, 1, -(this.start.style+this.start.top-this.start.move))
 		},
 		touchend(event){
 			let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
