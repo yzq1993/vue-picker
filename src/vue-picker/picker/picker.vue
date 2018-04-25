@@ -74,6 +74,8 @@ export default {
 			}else{
 				this.callback(status,this.value)
 			}
+			this.$destroy(true);
+      			this.$el.parentNode.removeChild(this.$el);
 		},
 		touchstart(event){
 			let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
