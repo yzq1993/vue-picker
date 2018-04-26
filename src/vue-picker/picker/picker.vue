@@ -8,8 +8,8 @@
   			<input type="button" :value=oktext @click.prevent=success>
   		</div>
   		<div class="am-ul">
-  			<div class="am-item" v-for="(item,m) in option" @touchmove.prevent=touchmove @touchstart.prevent=touchstart @touchend.prevent=touchend :index=m>
-				<ul :style="'transform: translate3d(0px, '+topStyle[m]+'px, 0px)'" :index=m :class=endClass[m]>
+  			<div class="am-item" v-for="(item,m) in option" @touchmove.prevent=touchmove($event,m) @touchstart.prevent=touchstart($event,m) @touchend.prevent=touchend($event,m)>
+				<ul :style="'transform: translate3d(0px, '+topStyle[m]+'px, 0px)'" :class=endClass[m]>
 					<li v-for="key in item" :class="key==value[m]?'active':''">{{key}}</li>
 				</ul>
 			</div>
@@ -76,21 +76,18 @@ export default {
 			this.$destroy(true);
       			this.$el.parentNode.removeChild(this.$el);
 		},
-		touchstart(event){
-			let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
-			this.endClass[index]=''
+		touchstart(event,index){
+			this.endClass.splice(index,1,null)
 			this.start.top=event.targetTouches[0].pageY
 			this.start.style=-this.topStyle[index]
 			this.start.value=this.value[index]
 		},
-		touchmove(event){
-			let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
+		touchmove(event,index){
 			this.start.move=event.targetTouches[0].pageY
 			this.topStyle.splice(index, 1, -(this.start.style+this.start.top-this.start.move))
 		},
-		touchend(event){
-			let index=event.target.parentNode.getAttribute("index")||event.target.getAttribute("index")
-			this.endClass[index]='end'
+		touchend(event,index){
+			this.endClass.splice(index,1,'end')
 			setTimeout(()=>{
 				let h=-this.topStyle[index],len=this.option[index].length-1
 				if(h<=0){
