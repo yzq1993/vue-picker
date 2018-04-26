@@ -29,9 +29,6 @@ let datepicker=(options={})=>{
 			options.value=[now.getFullYear(),now.getMonth()+1,now.getDate()]
 		}
 	}
-	if(options.value&&option.length!=options.value.length){
-		console.log('默认值错误或类型错误')
-	}
 	options.value=options.value.map((value)=>{
 		if(typeof value =='number'){
 			return value<10?'0'+value:value
