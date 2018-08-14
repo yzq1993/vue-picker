@@ -54,7 +54,7 @@ export default {
 			let m;
 			this.value.forEach( (value, index) =>{
 				if(!this.option[index]){return false}
-				m=this.option[index].indexOf(value)
+				m=this.option[index].findIndex(v=>v==value)
 				if(m==-1){console.log('默认值设置错误');return false}
 				this.topStyle[index]=-m*this.height
 			});
