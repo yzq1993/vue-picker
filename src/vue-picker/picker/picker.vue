@@ -137,7 +137,7 @@ export default {
 .am-picker .am-shade{
 	position: fixed;height:100%;width:100%;
 	background: rgba(0,0,0,0.3);
-	-webkit-backdrop-filter:saturate(180%) blur(4px) brightness(2)
+	-webkit-backdrop-filter:blur(4px)
 }
 
 .am-picker .am-box{
